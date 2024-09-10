@@ -4,6 +4,7 @@ import generateTokenAndSetCookie from "../Utils/GenerateJWT.js";
 
 export const login = async (req, res) => {
   try {
+    console.log(req.body);
     const { Username, Password } = req.body;
     if (!Username || !Password) {
       return res.status(422).json({ error: "Please fill all the fields" });
@@ -20,6 +21,7 @@ export const login = async (req, res) => {
       return res.status(422).json({ error: "Invalid Username or Password" });
     }
     generateTokenAndSetCookie(user._id, res);
+    console.log("New user logged in.");
     res.status(200).json({
       _id: user._id,
       message: "User logged in successfully",
@@ -64,8 +66,25 @@ export const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(Password, salt);
 
-    if (Password != ConfirmPassword) {
+    if (Password !== ConfirmPassword) {
       return res.status(422).json({ error: "Passwords do not match" });
+    }
+    if (Phone.length !== 10) {
+      return res
+        .status(422)
+        .json({ error: "Phone number should be 10 characters long" });
+    }
+
+    if (Password.length < 8) {
+      return res
+        .status(422)
+        .json({ error: "Password should be atleast 8 characters long" });
+    }
+
+    if (Username.length < 4) {
+      return res
+        .status(422)
+        .json({ error: "Username should be atleast 4 characters long" });
     }
 
     const user = await User.findOne({
@@ -78,7 +97,7 @@ export const signup = async (req, res) => {
 
     const get_dp = (Gender, Username) => {
       if (Gender === "other") {
-        return "https://avatar.iran.liara.run/public";
+        return "https://cdn0.iconfinder.com/data/icons/communication-line-10/24/account_profile_user_contact_person_avatar_placeholder-512.png";
       } else {
         return `https://avatar.iran.liara.run/public/${
           Gender === "male" ? "boy" : "girl"

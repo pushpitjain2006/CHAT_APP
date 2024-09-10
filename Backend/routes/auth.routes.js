@@ -6,8 +6,8 @@ const Authrouter = express.Router();
 Authrouter.get("/", (req, res) => {
   res.send("Hello from Auth API");
 });
-Authrouter.get("/login", login);
-Authrouter.get("/signup", signup);
-Authrouter.get("/logout", logout);
+Authrouter.post("/login", login);
+Authrouter.post("/signup", signup);
+Authrouter.post("/logout", logout);
 
 export default Authrouter;
