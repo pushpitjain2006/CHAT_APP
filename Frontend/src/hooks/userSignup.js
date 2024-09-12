@@ -1,23 +1,11 @@
 import React from "react";
-import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 const HandelSignup = async (Inputs) => {
   console.log(Inputs);
   const {setAuthUser} = React.useContext(AuthContext);
 
-  if (
-    !Inputs.fullName ||
-    !Inputs.username ||
-    !Inputs.email ||
-    !Inputs.phone ||
-    !Inputs.gender ||
-    !Inputs.password ||
-    !Inputs.confirmPassword
-  ) {
-    toast.error("Please fill all the fields");
-    return false;
-  }
+  
 
   const response = await fetch("http://localhost:3001/api/auth/signup", {
     method: "POST",

@@ -2,18 +2,17 @@ import React from "react";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
+import toast from "react-hot-toast";
 
 const Login = () => {
   let [Username, setUsername] = useState("");
   let [Password, setPassword] = useState("");
 
-
-
   async function login_back(e) {
     e.preventDefault();
     try {
       if (!Username || !Password) {
-        return alert("Please fill all the fields");
+        return toast.error("Please fill all the fields");
       }
       const res = await fetch("http://localhost:3001/api/auth/login", {
         method: "POST",
@@ -24,19 +23,16 @@ const Login = () => {
       const data = await res.json();
 
       if (res.status === 422) {
-        alert(data.error);
-      }
-      if (res.status === 500) {
-        alert("Internal Server Error");
-      }
-      if (res.status === 200) {
+        toast.error(data.error);
+      } else if (res.status === 500) {
+        toast.error("Internal Server Error");
+      } else if (res.status === 200) {
         localStorage.setItem("chat-user", JSON.stringify(data));
         window.location.href = "/";
-        
       }
     } catch (error) {
       console.log(error);
-      alert(`3Internal Server Error ${error}`);
+      alert(`Internal Server Error ${error}`);
     }
   }
   return (

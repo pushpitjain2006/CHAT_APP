@@ -2,7 +2,23 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import HandelSignup from "../../hooks/userSignup.js";
+import toast from "react-hot-toast";
 
+const HandelSignup2 = (Inputs) => {
+  if (
+    Inputs.fullName ||
+    !Inputs.username ||
+    !Inputs.email ||
+    !Inputs.phone ||
+    !Inputs.gender ||
+    !Inputs.password ||
+    !Inputs.confirmPassword
+  ) {
+    toast.error("Please fill all the fields");
+  } else {
+    HandelSignup(Inputs);
+  }
+};
 
 const Signup = () => {
   let [Inputs, setInputs] = useState({
@@ -18,7 +34,7 @@ const Signup = () => {
   return (
     <form
       onSubmit={(e) => {
-        HandelSignup(Inputs);
+        HandelSignup2(Inputs);
         e.preventDefault();
       }}
     >
