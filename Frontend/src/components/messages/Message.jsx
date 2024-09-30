@@ -11,7 +11,7 @@ const Message = () => {
         <div className="w-10 rounded-full">
           <img
             alt="DP"
-            // src={profilePic}
+            // src={}
           />
         </div>
       </div>

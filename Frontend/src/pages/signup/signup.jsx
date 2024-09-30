@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 const HandelSignup2 = (Inputs) => {
   if (
-    Inputs.fullName ||
+    !Inputs.fullName ||
     !Inputs.username ||
     !Inputs.email ||
     !Inputs.phone ||
@@ -15,7 +15,12 @@ const HandelSignup2 = (Inputs) => {
     !Inputs.confirmPassword
   ) {
     toast.error("Please fill all the fields");
-  } else {
+  } else if(
+   Inputs.password!=Inputs.confirmPassword
+  ){
+    toast.error("Password and Confirm Password do not match")
+  }
+  else {
     HandelSignup(Inputs);
   }
 };
