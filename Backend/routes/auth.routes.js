@@ -1,13 +1,12 @@
 import express from "express";
-import { login, logout, signup } from "../controllers/auth.controllers.js";
+import { login, logout, signup } from "../controllers/auth.controller.js";
 
-const Authrouter = express.Router();
+const router = express.Router();
 
-Authrouter.get("/", (req, res) => {
-  res.send("Hello from Auth API");
-});
-Authrouter.post("/login", login);
-Authrouter.post("/signup", signup);
-Authrouter.post("/logout", logout);
+router.post("/signup", signup);
 
-export default Authrouter;
+router.post("/login", login);
+
+router.post("/logout", logout);
+
+export default router;
